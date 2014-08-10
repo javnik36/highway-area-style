@@ -1,17 +1,17 @@
 features
 	areas
 		higharea : area:highway=yes OR area:highway:crossing=yes
-		footarea : highway=footway AND area=yes
-		cyclearea : highway=cycleway AND area=yes
-		footisland : footway=traffic_island AND area=yes AND highway=footway
+		footarea : highway=footway AND @isTrue(area)
+		cyclearea : highway=cycleway AND @isTrue(area)
+		footisland : footway=traffic_island AND @isTrue(area) AND highway=footway
 		island : traffic_calming=island
 		parking : amenity=parking
 		zielen : landuse=grass
-		stops : public_transport=platform AND area=yes
+		stops : public_transport=platform AND @isTrue(area)
 	lines
 		drogi : highway=residential OR highway=service
-		foot : highway=footway
-		bicycle : highway=cycleway
+		foot : highway=footway AND NOT @isTrue(area)
+		bicycle : highway=cycleway AND NOT @isTrue(area)
 	points
 		endy : crossing:end=yes
 		cross : highway=crossing
@@ -20,22 +20,6 @@ rules
 	target: higharea
 		define
 			fill-color : #282B2A
-			min-zoom : 17
-			line-style : none
-			line-width : 1
-		draw : fill
-
-	target: footarea
-		define
-			fill-color : #bfc8c9
-			min-zoom : 17
-			line-style : none
-			line-width : 1
-		draw : fill
-
-	target: cyclearea
-		define
-			fill-color : #EE0000
 			min-zoom : 17
 			line-style : none
 			line-width : 1
@@ -71,6 +55,7 @@ rules
 	target: zielen
 		define
 			fill-color : #90EE90
+			line-style : none
 			min-zoom : 17
 		draw : fill
 
@@ -91,16 +76,16 @@ rules
 			text : [[name]]
 		draw : text
 
-	target : *footway*
+	target : *foot*
 		define
-		for : area=yes
+		if : footarea
 			define
 				fill-color : #bfc8c9
 				min-zoom : 17
 				line-style : none
 				line-width : 1
 			draw : fill
-		else
+		elseif : foot
 			define
 				line-style : dash
 				line-width : 17:5;19:3
@@ -108,16 +93,16 @@ rules
 				min-zoom : 17
 			draw : line
 
-	target : *cycleway*
+	target : *cycle*
 		define
-		for : area=yes
+		if : cyclearea
 			define
 				fill-color : #EE0000
 				min-zoom : 17
 				line-style : none
 				line-width : 1
 			draw : fill
-		else
+		elseif : bicycle
 			define
 				line-style : dash
 				line-width : 17:5;19:3

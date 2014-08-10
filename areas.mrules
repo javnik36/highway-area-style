@@ -1,0 +1,142 @@
+features
+	areas
+		higharea : area:highway=yes OR area:highway:crossing=yes
+		footarea : highway=footway AND area=yes
+		cyclearea : highway=cycleway AND area=yes
+		footisland : footway=traffic_island AND area=yes AND highway=footway
+		island : traffic_calming=island
+		parking : amenity=parking
+		zielen : landuse=grass
+		stops : public_transport=platform AND area=yes
+	lines
+		drogi : highway=residential OR highway=service
+		foot : highway=footway
+		bicycle : highway=cycleway
+	points
+		endy : crossing:end=yes
+		cross : highway=crossing
+
+rules
+	target: higharea
+		define
+			fill-color : #282B2A
+			min-zoom : 17
+			line-style : none
+			line-width : 1
+		draw : fill
+
+	target: footarea
+		define
+			fill-color : #bfc8c9
+			min-zoom : 17
+			line-style : none
+			line-width : 1
+		draw : fill
+
+	target: cyclearea
+		define
+			fill-color : #EE0000
+			min-zoom : 17
+			line-style : none
+			line-width : 1
+		draw : fill
+
+	target : footisland
+		define
+			fill-color : #a5a391
+			min-zoom : 17
+			//line-size : 1
+			line-color : #CFDADB
+		draw : fill
+
+	target : island
+		define
+			fill-hatch : diagonalcross
+			fill-color : #FFFFFF
+			min-zoom : 17
+			line-style : solid
+			line-width : 2
+			line-color : #FFFFFF
+		draw : fill
+
+	target: parking
+		define
+			fill-color : #ffff99
+			min-zoom : 17
+			//line-size : 1
+			text : [[name]]
+		draw : fill
+		draw : text
+
+	target: zielen
+		define
+			fill-color : #90EE90
+			min-zoom : 17
+		draw : fill
+
+	target: stops
+		define
+			fill-color : #EFDD6F
+			min-zoom : 17
+			text : "H \n" [[name]]
+		draw : fill
+		draw : text
+
+	target : drogi
+		define
+			font-family : Tahoma
+			font-size : 12
+			//font-halo-width : 1
+			//font-halo-opacity : 1
+			text : [[name]]
+		draw : text
+
+	target : *footway*
+		define
+		for : area=yes
+			define
+				fill-color : #bfc8c9
+				min-zoom : 17
+				line-style : none
+				line-width : 1
+			draw : fill
+		else
+			define
+				line-style : dash
+				line-width : 17:5;19:3
+				line-color : #bfc8c9
+				min-zoom : 17
+			draw : line
+
+	target : *cycleway*
+		define
+		for : area=yes
+			define
+				fill-color : #EE0000
+				min-zoom : 17
+				line-style : none
+				line-width : 1
+			draw : fill
+		else
+			define
+				line-style : dash
+				line-width : 17:5;19:3
+				line-color : #EE0000
+				min-zoom : 17
+			draw : line
+
+	target : endy
+		define
+			font-family : Comic Sans MS
+			font-weight : bold
+			text : o
+		draw : text
+
+	target : cross
+		define
+			min-zoom : 17
+			icon-image : datas\icon\walk.png
+			icon-width : 17:12;19:14
+			align-horizontal : center
+			align-vertical : center
+		draw : icon

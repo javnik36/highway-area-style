@@ -8,6 +8,7 @@ features
 		parking : amenity=parking
 		zielen : landuse=grass
 		stops : public_transport=platform AND @isTrue(area)
+		buildings : building
 	lines
 		drogi : highway=residential OR highway=service
 		foot : highway=footway AND NOT @isTrue(area)
@@ -15,8 +16,16 @@ features
 	points
 		endy : crossing:end=yes
 		cross : highway=crossing
+		waste : amenity=waste_basket
+
+properties
+	font-family : Calibri
+	text-halo-width : 0.5
+	text-halo-opacity : 0.2
+	text-color : #FFFFFF
 
 rules
+//AREAS RULES
 	target: higharea
 		define
 			fill-color : #282B2A
@@ -42,39 +51,6 @@ rules
 			line-width : 2
 			line-color : #FFFFFF
 		draw : fill
-
-	target: parking
-		define
-			fill-color : #ffff99
-			min-zoom : 17
-			//line-size : 1
-			text : [[name]]
-		draw : fill
-		draw : text
-
-	target: zielen
-		define
-			fill-color : #90EE90
-			line-style : none
-			min-zoom : 17
-		draw : fill
-
-	target: stops
-		define
-			fill-color : #EFDD6F
-			min-zoom : 17
-			text : "H \n" [[name]]
-		draw : fill
-		draw : text
-
-	target : drogi
-		define
-			font-family : Tahoma
-			font-size : 12
-			//font-halo-width : 1
-			//font-halo-opacity : 1
-			text : [[name]]
-		draw : text
 
 	target : *foot*
 		define
@@ -110,12 +86,60 @@ rules
 				min-zoom : 17
 			draw : line
 
+	target: parking
+		define
+			fill-color : #ffff99
+			min-zoom : 17
+			line-width : 0.7
+			line-style : solid
+			line-color : #008080
+			text : "P"
+			text-color : #008080
+			font-size : 17:18;18:15
+		draw : fill
+		draw : text
+
+	target: zielen
+		define
+			fill-color : #90EE90
+			line-style : none
+			min-zoom : 17
+		draw : fill
+
+	target: stops
+		define
+			fill-color : #EFDD6F
+			line-style : none
+			min-zoom : 17
+			text : "H \n" [[name]]
+		draw : fill
+		draw : text
+
+	target: buildings
+		define
+			fill-color : #DB9370
+			line-style : solid
+			line-color : #87421F
+			line-width : 17:2;19:0.5
+		draw : fill
+
+//LINES RULES
+	target : drogi
+		define
+			font-family : Tahoma
+			font-size : 12
+			text : [[name]]
+			text-color : #FFFFFF
+		draw : text
+
+//NODES RULES
 	target : endy
 		define
-			font-family : Comic Sans MS
-			font-weight : bold
-			text : o
-		draw : text
+			min-zoom : 17
+			shape : diamond
+			shape-size : 1
+			line-color : #CC00FF
+		draw : shape
 
 	target : cross
 		define
@@ -125,3 +149,10 @@ rules
 			align-horizontal : center
 			align-vertical : center
 		draw : icon
+
+	target : waste
+		define
+			min-zoom : 18
+			text : "o"
+			font-size : 18
+		draw : text

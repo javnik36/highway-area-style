@@ -1,7 +1,7 @@
 features
 	areas
-		higharea : area:highway=yes OR area:highway:crossing=yes
-		footarea : highway=footway AND @isTrue(area)
+		higharea : area:highway OR area:highway:crossing
+		footarea : ( highway=footway AND @isTrue(area) ) OR area:sidewalk=yes
 		cyclearea : highway=cycleway AND @isTrue(area)
 		footisland : footway=traffic_island AND @isTrue(area) AND highway=footway
 		island : traffic_calming=island
@@ -13,12 +13,14 @@ features
 		drogi : highway=residential OR highway=service
 		foot : highway=footway AND NOT @isTrue(area)
 		bicycle : highway=cycleway AND NOT @isTrue(area)
+		design : highway=path AND foot AND bicycle
 	points
 		endy : crossing:end=yes
 		cross : highway=crossing
 		waste : amenity=waste_basket
 
 properties
+	map-background-color: #6B8E23
 	font-family : Calibri
 	text-halo-width : 0.5
 	text-halo-opacity : 0.2
@@ -132,6 +134,24 @@ rules
 			text-color : #FFFFFF
 		draw : text
 
+	target : design
+		define
+			min-zoom : 17
+			line-style : dash
+			line-width : 17:5;19:3
+			line-color : #EE0000
+		draw: line
+
+	target : design
+		define
+			min-zoom : 17
+			line-style : dash
+			line-width : 17:5;19:3
+			line-color : #bfc8c9
+			line-offset : 17:1;19:5
+			line-offset-sides : right
+		draw : line
+
 //NODES RULES
 	target : endy
 		define
@@ -144,8 +164,9 @@ rules
 	target : cross
 		define
 			min-zoom : 17
-			icon-image : datas\icon\walk.png
-			icon-width : 17:12;19:14
+			//access path to icon:
+			icon-image : datas\icon\walk2.png
+			icon-width : 17:15;20:12
 			align-horizontal : center
 			align-vertical : center
 		draw : icon

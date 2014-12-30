@@ -10,7 +10,7 @@ features
 		stops : public_transport=platform AND @isTrue(area)
 		buildings : building
 	lines
-		drogi : highway=residential OR highway=service
+		drogi : highway
 		foot : highway=footway AND NOT @isTrue(area)
 		bicycle : highway=cycleway AND NOT @isTrue(area)
 		design : highway=path AND foot AND bicycle
@@ -129,9 +129,14 @@ rules
 	target : drogi
 		define
 			font-family : Tahoma
-			font-size : 12
+			font-size : 17:10;20:18
 			text : [[name]]
 			text-color : #FFFFFF
+			line-style : solid
+			line-color : #B0E0E6
+			line-width : 10:1;16:5
+			max-zoom : 17
+		draw : line
 		draw : text
 
 	target : design

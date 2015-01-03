@@ -18,6 +18,8 @@ features
 		endy : crossing:end=yes
 		cross : highway=crossing
 		waste : amenity=waste_basket
+		trees : natural=tree
+		light : highway=street_lamp
 
 properties
 	map-background-color: #6B8E23
@@ -171,7 +173,7 @@ rules
 			min-zoom : 17
 			//access path to icon:
 			icon-image : datas\icon\walk2.png
-			icon-width : 17:15;20:12
+			icon-width : 17:14;20:12
 			align-horizontal : center
 			align-vertical : center
 		draw : icon
@@ -182,3 +184,42 @@ rules
 			text : "o"
 			font-size : 18
 		draw : text
+
+	target : trees
+		define
+			min-zoom : 18
+			shape : circle
+			shape-size : 1
+			//change to brown for <z18
+			line-color : #000000
+		draw : shape
+		define
+			min-zoom : 19
+			shape : circle
+			shape-size : 15
+			fill-color : #CFECA8
+			fill-opacity : 0.45
+			line-style : solid
+			line-color : #89D2AE
+			line-width : 19:0.5;20:0.8
+		draw : shape
+
+	target : light
+		define
+			min-zoom : 19
+			//shape : circle
+			shape : custom
+			shape-def : p:#72797F;pw:5;f:#809bc0;m:-10,-10;l:10,-10;a:10,10,10,10;l:-10,10;a:10,10,-10,-10;z
+			shape-size : 19:5;20:7
+			fill-color : #72797F
+			line-style : none
+		draw : shape
+		define
+		//dodaæ obwiednie
+			min-zoom : 19
+			shape : circle
+			shape-size : 19:50;20:72
+			fill-color : #FEED73
+			fill-opacity : 0.3
+			line-style : none
+		draw : shape

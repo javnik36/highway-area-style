@@ -5,8 +5,14 @@ features
 		cyclearea : highway=cycleway AND @isTrue(area)
 		footisland : footway=traffic_island AND @isTrue(area) AND highway=footway
 		island : traffic_calming=island
+		by_street : area:highway:prohibited OR ( highway=footway AND @isTrue(area) AND isFalse( access ) )
+		bus_area : area:highway:permissive
+		steps : highway=steps AND @isTrue(area)
+		
+		
 		parking : amenity=parking
 		zielen : landuse=grass
+		pociag : landuse=railway
 		stops : public_transport=platform AND @isTrue(area)
 		buildings : building
 	lines
@@ -65,6 +71,11 @@ rules
 				line-style : none
 				line-width : 1
 			draw : fill
+		elseif : footarea AND isFalse(access)
+			define
+				fill-color : #C7B5D5
+				line-style : none
+			draw : fill
 		elseif : foot
 			define
 				line-style : dash
@@ -90,6 +101,32 @@ rules
 				min-zoom : 17
 			draw : line
 
+
+	target : steps
+		define
+			min-zoom : 17
+			fill-hatch : diagonalcross
+			fill-color : #FF6512
+			fill-hatch-color : #EE4E3C
+			fill-hatch-opacity : 0.5
+			line-style : none
+		draw : fill
+
+
+	target : by_street
+		define
+			min-zoom : 17
+			fill-color : #AF918F
+			line-style : none
+		draw : fill
+		
+	target : bus_area
+		define
+			min-zoom : 17
+			fill-color : #85857D
+			line-style : none
+		draw : fill
+
 	target: parking
 		define
 			fill-color : #ffff99
@@ -108,6 +145,15 @@ rules
 			fill-color : #90EE90
 			line-style : none
 			min-zoom : 17
+		draw : fill
+
+	target : pociag
+		define
+			//popraw kolor
+			fill-color : #EADBE8
+			line-style : none
+			fill-opacity: 0.5
+			min-zoom: 17
 		draw : fill
 
 	target: stops

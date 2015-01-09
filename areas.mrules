@@ -5,7 +5,8 @@ features
 		cyclearea : highway=cycleway AND @isTrue(area)
 		footisland : footway=traffic_island AND @isTrue(area) AND highway=footway
 		island : traffic_calming=island
-		by_street : area:highway:prohibited OR ( highway=footway AND @isTrue(area) AND isFalse( access ) )
+		by_street : area:highway:prohibited
+		foot_by_street : highway=footway AND @isTrue(area) AND isFalse( access )
 		bus_area : area:highway:permissive
 		steps : highway=steps AND @isTrue(area)
 		
@@ -20,6 +21,8 @@ features
 		foot : highway=footway AND NOT @isTrue(area)
 		bicycle : highway=cycleway AND NOT @isTrue(area)
 		design : highway=path AND foot AND bicycle
+		tram-track : railway=tram
+		barriers : barrier
 	points
 		endy : crossing:end=yes
 		cross : highway=crossing
@@ -64,17 +67,22 @@ rules
 
 	target : *foot*
 		define
-		if : footarea
+		if : foot_by_street //footarea AND isFalse(access)
+			define
+				min-zoom : 17
+				fill-color : #AF918F
+				line-style : none
+			draw : fill
+//			define
+//				fill-color : #C7B5D5
+//				line-style : none
+//			draw : fill
+		elseif : footarea
 			define
 				fill-color : #bfc8c9
 				min-zoom : 17
 				line-style : none
 				line-width : 1
-			draw : fill
-		elseif : footarea AND isFalse(access)
-			define
-				fill-color : #C7B5D5
-				line-style : none
 			draw : fill
 		elseif : foot
 			define
@@ -203,6 +211,21 @@ rules
 			line-color : #bfc8c9
 			line-offset : 17:1;19:5
 			line-offset-sides : right
+		draw : line
+
+	target : tram-track
+		define
+			min-zoom : 18
+			line-color : #000000
+			line-offset : 18:1;19:3;20:5
+			line-offset-sides : both
+		draw : line
+
+	target : barriers
+		define
+			min-zoom : 17
+			line-color : #000000
+			line-width : 0.5
 		draw : line
 
 //NODES RULES

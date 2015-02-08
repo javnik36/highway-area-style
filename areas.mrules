@@ -30,6 +30,8 @@ features
 		trees : natural=tree
 		light : highway=street_lamp
 
+		layer : layer=1 OR layer=2
+
 properties
 	map-background-color: #6B8E23
 	font-family : Calibri
@@ -39,12 +41,21 @@ properties
 
 rules
 //AREAS RULES
+
+//sprawiæ ¿eby dzia³a³o...?
 	target: higharea
-		define
-			fill-color : #282B2A
-			min-zoom : 17
-			line-style : none
-			line-width : 1
+		if : 
+			define
+				fill-color : #AF918F
+				fill-opacity : 1
+				min-zoom : 17
+				line-style : none
+//		else
+//			define
+//				fill-color : #282B2A
+//				min-zoom : 17
+//				line-style : none
+//				line-width : 1
 		draw : fill
 
 	target : footisland

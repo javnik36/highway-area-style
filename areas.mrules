@@ -1,7 +1,8 @@
 features
 	areas
-		higharea : area:highway OR area:highway:crossing
-		footarea : ( highway=footway AND @isTrue(area) ) OR area:sidewalk=yes
+		//higharea : area:highway OR area:highway:crossing OR ( highway AND NOT ( highway=footway OR highway=cycleway OR highway=steps) AND ( @isTrue(area) OR type=multipolygon ) )
+		higharea : area:highway OR area:highway:crossing OR ( ( highway=residential OR highway=primary OR highway=secondary) AND @isTrue(area) )
+		footarea : ( highway=footway AND @isTrue(area) ) OR area:sidewalk=yes OR (type=multipolygon AND highway=footway)
 		cyclearea : highway=cycleway AND @isTrue(area)
 		footisland : footway=traffic_island AND @isTrue(area) AND highway=footway
 		island : traffic_calming=island
@@ -18,7 +19,7 @@ features
 		buildings : building
 	lines
 		drogi : highway
-		foot : highway=footway AND NOT @isTrue(area)
+		foot : highway=footway AND NOT ( @isTrue(area) OR type=multipolygon )
 		bicycle : highway=cycleway AND NOT @isTrue(area)
 		design : highway=path AND foot AND bicycle
 		tram-track : railway=tram

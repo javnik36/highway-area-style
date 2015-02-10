@@ -40,101 +40,87 @@ properties
 
 rules
 //AREAS RULES
-	target: higharea
-		define
-			fill-color : #282B2A
-			min-zoom : 17
-			line-style : none
-			line-width : 1
-		draw : fill
-
-	target : footisland
-		define
-			fill-color : #a5a391
-			min-zoom : 17
-			//line-size : 1
-			line-color : #CFDADB
-		draw : fill
-
-	target : island
-		define
-			fill-hatch : diagonalcross
-			fill-color : #FFFFFF
-			min-zoom : 17
-			line-style : solid
-			line-width : 2
-			line-color : #FFFFFF
-		draw : fill
-
-	target : *foot*
-		define
-		if : foot_by_street //footarea AND isFalse(access)
+	target : $featuretype(area)
+		if : higharea
+			define
+				fill-color : #282B2A
+				fill-opacity : 1
+				min-zoom : 17
+				line-style : none
+			for : layer=1
+				define
+					fill-color : #282B2A
+					fill-opacity : 0.5
+			draw : fill
+		elseif : by_street
 			define
 				min-zoom : 17
 				fill-color : #AF918F
 				line-style : none
-			draw : fill
-//			define
-//				fill-color : #C7B5D5
-//				line-style : none
-//			draw : fill
+		elseif : bus_area
+			define
+				min-zoom : 17
+				fill-color : #85857D
+				line-style : none
+		elseif : foot_by_street //footarea AND isFalse(access)
+			define
+				min-zoom : 17
+				fill-color : #AF918F
+				line-style : none
 		elseif : footarea
 			define
 				fill-color : #bfc8c9
 				min-zoom : 17
 				line-style : none
 				line-width : 1
-			draw : fill
-		elseif : foot
+		elseif : footisland
 			define
-				line-style : dash
-				line-width : 17:5;19:3
-				line-color : #bfc8c9
+				fill-color : #a5a391
 				min-zoom : 17
-			draw : line
-
-	target : *cycle*
-		define
-		if : cyclearea
+				line-color : #CFDADB
+		elseif : island
+			define
+				fill-hatch : diagonalcross
+				fill-color : #FFFFFF
+				min-zoom : 17
+				line-style : solid
+				line-width : 2
+				line-color : #FFFFFF
+		elseif : cyclearea
 			define
 				fill-color : #EE0000
 				min-zoom : 17
 				line-style : none
 				line-width : 1
-			draw : fill
-		elseif : bicycle
+		elseif : steps
 			define
-				line-style : dash
-				line-width : 17:5;19:3
-				line-color : #EE0000
 				min-zoom : 17
-			draw : line
-
-
-	target : steps
-		define
-			min-zoom : 17
-			fill-hatch : diagonalcross
-			fill-color : #FF6512
-			fill-hatch-color : #EE4E3C
-			fill-hatch-opacity : 0.5
-			line-style : none
+				fill-hatch : diagonalcross
+				fill-color : #FF6512
+				fill-hatch-color : #EE4E3C
+				fill-hatch-opacity : 0.5
+				line-style : none
+		else
+			stop
 		draw : fill
 
 
-	target : by_street
+
+	target : foot
 		define
+			line-style : dash
+			line-width : 17:5;19:3
+			line-color : #bfc8c9
 			min-zoom : 17
-			fill-color : #AF918F
-			line-style : none
-		draw : fill
-		
-	target : bus_area
+		draw : line
+
+	target : bicycle
 		define
+			line-style : dash
+			line-width : 17:5;19:3
+			line-color : #EE0000
 			min-zoom : 17
-			fill-color : #85857D
-			line-style : none
-		draw : fill
+		draw : line
 
 	target: parking
 		define
